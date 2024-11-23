@@ -1,0 +1,81 @@
+/* Paleta de colores */
+:root {
+    --negro: #000000;
+    --verde: #28a745;
+    --blanco: #ffffff;
+  }
+  
+  /* Estilos generales */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: var(--negro);
+    color: var(--blanco);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Contenedor del formulario */
+  .registro-container {
+    background-color: var(--blanco);
+    border-radius: 8px;
+    padding: 20px 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Título */
+  h1 {
+    color: var(--verde);
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  /* Formulario */
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Campos del formulario */
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  label {
+    color: var(--negro);
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--verde);
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Botón de registro */
+  .btn {
+    background-color: var(--verde);
+    color: var(--blanco);
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #218838;
+  }
+  
