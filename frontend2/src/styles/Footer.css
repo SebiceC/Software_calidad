@@ -1,0 +1,27 @@
+/* Footer */
+.footer {
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  height: 60px; /* Altura del footer */
+  background: var(--gris-oscuro); /* Fondo de gradiente azul */
+  color: #ffffff; /* Texto blanco */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Fijo en la parte inferior */
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para mejor visibilidad */
+}
+
+.footer a {
+  color: #ffffff; /* Texto blanco para los enlaces */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #4a6aff; /* Cambio de color cuando el enlace es hovered (azul claro) */
+  text-decoration: underline;
+}

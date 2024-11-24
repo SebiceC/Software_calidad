@@ -1,0 +1,100 @@
+/* Paleta de colores */
+:root {
+  --azul-claro: #a8c8f7; /* Azul claro suave */
+  --azul-oscuro: #4a6aff; /* Azul más oscuro */
+  --blanco: #ffffff;
+  --gris-claro: #f2f2f2; /* Gris claro para bordes y fondo suave */
+  --gris-oscuro: #333333; /* Gris oscuro para texto */
+}
+
+/* Contenedor principal */
+.login-container {
+  background-color: var(--blanco);
+  border-radius: 8px;
+  padding: 30px 40px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  margin: 50px auto;
+  background: var(--gris-claro); /* Fondo suave y claro */
+}
+
+/* Fondo general */
+body {
+  background: var(--gris-claro); /* Fondo de gradiente azul */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Título */
+h1 {
+  color: var(--azul-oscuro); /* Azul oscuro para el título */
+  margin-bottom: 20px;
+  font-size: 28px; /* Tamaño de fuente más grande */
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Grupo del formulario */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  color: var(--gris-oscuro); /* Gris oscuro para los labels */
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--azul-oscuro); /* Borde azul oscuro */
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px; /* Espacio entre los campos */
+}
+
+/* Botón de inicio de sesión */
+.btn {
+  background-color: var(--azul-oscuro);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #2e4e8f; /* Azul más oscuro al pasar el mouse */
+}
+
+/* Enlace de registro */
+.register-link {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--gris-oscuro);
+}
+
+.register-link a {
+  color: var(--azul-oscuro); /* Azul oscuro para el enlace */
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

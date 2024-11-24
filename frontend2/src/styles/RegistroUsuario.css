@@ -8,7 +8,6 @@
   /* Estilos generales */
   body {
     font-family: Arial, sans-serif;
-    background-color: var(--negro);
     color: var(--blanco);
     margin: 0;
     padding: 0;
@@ -16,6 +15,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: linear-gradient(to bottom, #000000, #28a745, #ffffff);
   }
   
   /* Contenedor del formulario */
