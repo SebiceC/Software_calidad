@@ -4,7 +4,7 @@ import Login from './components/Login';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EmpresaForm from './components/EmpresaForm';
 import SeleccionarActividad from './components/SeleccionarActividad';
-import Evaluacion from './components/Evaluacion';
+import Evaluacion from './pages/Evaluacion';
 import Resultados from './components/Resultados';
 import MatrizRiesgos from './components/MatrizRiesgos';
 import MatrizMitigacionRiesgos from './components/MatrizMitigacionRiesgos';
@@ -12,6 +12,7 @@ import EliminarDatos from './components/EliminarDatos';
 import UserHome from './pages/UserHome';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import EvaluacionTabla from './components/EvaluacionTabla';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/matriz-mitigacion" element={<MatrizMitigacionRiesgos />} />
         <Route path="/eliminar" element={<EliminarDatos />} />
         <Route path='/UserHome' element={<UserHome />} />
+        <Route path='/EvaluacionTabla' element={<EvaluacionTabla />} />
       </Routes>
       <div>
         <Footer />

@@ -55,11 +55,12 @@ label {
   font-weight: bold;
   margin-bottom: 5px;
   display: block;
+  width: 92%;
   
 }
 
 input {
-  width: 100%;
+  width: 92%;
   padding: 10px;
   border: 1px solid var(--azul-oscuro); /* Borde azul oscuro */
   border-radius: 5px;
