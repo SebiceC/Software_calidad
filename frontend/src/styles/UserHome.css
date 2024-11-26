@@ -9,6 +9,19 @@ body {
   align-items: center; /* Centra el contenido verticalmente */
   min-height: 100vh; /* Asegura que todo el contenido llene la ventana */
 }
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Asegura que el HTML y el body abarquen toda la altura */
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el contenido mínimo sea igual a la altura de la pantalla */
+}
 
 .home-container {
   display: flex;

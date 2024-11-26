@@ -11,7 +11,7 @@
   position: fixed; /* Fijo en la parte superior */
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 1000;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para mejor visibilidad */
 }
 

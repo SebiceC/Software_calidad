@@ -1,48 +1,94 @@
 .evaluacion-tabla-container {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  .evaluacion-tabla {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
+  width: 100%; /* Asegura que el contenedor ocupe el ancho completo */
+  max-width: 100%; /* Evita que exceda el ancho de la pantalla */
+  overflow-x: auto; /* Activa el scroll horizontal si es necesario */
+  margin: 0 auto; /* Centra horizontalmente */ /* Espacio interno uniforme de 20px en todas las direcciones */
+  padding-top: 100px;
+  padding-bottom: 100px; /* Espacio superior adicional para separar del navbar */
+  box-sizing: border-box; /* Incluye padding y border en el cálculo del tamaño */
+}
+
+
+.evaluacion-tabla {
+  width: 100%; /* Asegura que la tabla se ajuste al contenedor */
+  border-collapse: collapse;
+  font-size: 14px; /* Reduce el tamaño del texto para evitar desbordes */
+}
+
+.evaluacion-tabla th,
+.evaluacion-tabla td {
+  border: 1px solid #a7a6a6;
+  padding: 5px;
+  text-align: left; /* Cambia a alineación izquierda si mejora la legibilidad */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.evaluacion-tabla th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: center; /* Centra los encabezados */
+}
+
+.resultados-container {
+  margin-top: 20px;
+}
+
+.resultados-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.resultados-tabla th,
+.resultados-tabla td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.resultados-tabla th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+td input {
+  width: 85%;
+  padding: 10px;
+  border: 1px solid var(--azul-oscuro); /* Borde azul oscuro */
+  border-radius: 5px;
+  font-size: 14px; /* Espacio entre los campos */
+}
+.guardar-btn-riesgos {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.matriz-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
   .evaluacion-tabla th,
-  .evaluacion-tabla td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+  .evaluacion-tabla td,
+  .resultados-tabla th,
+  .resultados-tabla td {
+    font-size: 12px;
+    padding: 6px;
   }
-  
-  .evaluacion-tabla th {
-    background-color: #4a6aff;
-    color: white;
+
+  .evaluacion-tabla-container {
+    padding: 5px;
   }
-  
-  .evaluacion-tabla tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .evaluacion-tabla tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .guardar-btn {
-    background-color: #4a6aff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .guardar-btn:hover {
-    background-color: #3a5ecf;
-  }
-  
+}

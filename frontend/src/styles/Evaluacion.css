@@ -46,7 +46,7 @@
   }
   
   /* Select del formulario */
-  select {
+  .selector-tipo-software {
     width: 100%;
     padding: 10px;
     border: 1px solid var(--azul-oscuro);

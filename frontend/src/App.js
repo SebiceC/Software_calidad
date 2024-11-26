@@ -18,8 +18,6 @@ function App() {
   return (
     <Router>
       <div>
-        <Navbar />
-      </div>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<RegistroUsuario />} />
@@ -33,8 +31,6 @@ function App() {
         <Route path='/UserHome' element={<UserHome />} />
         <Route path='/EvaluacionTabla' element={<EvaluacionTabla />} />
       </Routes>
-      <div>
-        <Footer />
       </div>
     </Router>
   );

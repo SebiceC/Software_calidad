@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import "../styles/Evaluacion.css";
+import preguntas from "../data/preguntas.json"; // Importa el banco de preguntas
+import { obtenerPreguntasPorNormaYCriterio } from "../utils/utils"; // Importa la función utilitaria
 
 const EvaluacionFlujo = () => {
   const [paso, setPaso] = useState(1);
@@ -104,12 +106,17 @@ const EvaluacionFlujo = () => {
 
   const handleSubmitEvaluacion = (e) => {
     e.preventDefault();
+
+    const criteriosSeleccionados = criterios.map((criterio) => criterio.criterio);
+    const preguntasEvaluacion = obtenerPreguntasPorNormaYCriterio(norma, criteriosSeleccionados, preguntas);
+
     const datosEvaluacion = {
       tipoSoftware,
       norma,
       criterios,
+      preguntas: preguntasEvaluacion,
     };
-    navigate("/evaluacion-tabla", { state: datosEvaluacion }); // Redirige con datos
+    navigate("/evaluacionTabla", { state: datosEvaluacion }); // Redirige con datos
   };
 
   return (
@@ -119,7 +126,7 @@ const EvaluacionFlujo = () => {
       {paso === 1 && (
         <form className="seleccionar-tipo-software" onSubmit={handleSubmitSoftware}>
           <label>Selecciona el Tipo de Software:</label>
-          <select value={tipoSoftware} onChange={handleSelectSoftware}>
+          <select className="selector-tipo-software" value={tipoSoftware} onChange={handleSelectSoftware}>
             <option value="">Seleccione un tipo</option>
             <option value="Software Bancario">Software Bancario</option>
             <option value="Software Académico">Software Académico</option>

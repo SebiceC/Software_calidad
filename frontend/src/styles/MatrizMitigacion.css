@@ -1,0 +1,45 @@
+.matriz-mitigacion-container {
+    padding: 20px;
+    margin-top: 100px;
+  }
+  
+  .tabla-mitigacion {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .tabla-mitigacion th,
+  .tabla-mitigacion td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .tabla-mitigacion th {
+    background-color: #f4f4f4;
+  }
+  
+  .guardar-btn,
+  .inicio-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .guardar-btn:hover,
+  .inicio-btn:hover {
+    background-color: #0056b3;
+  }
+  td select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--azul-oscuro);
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  

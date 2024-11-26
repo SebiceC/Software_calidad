@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/UserHome.css';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const UserHome = ({ usuario }) => {
   return (
+    <>
+    <Navbar />
     <div className="home-container">
       <header className="home-header">
         <h1>Bienvenido, {usuario || 'Usuario'}</h1>
@@ -14,10 +18,6 @@ const UserHome = ({ usuario }) => {
         <Link to="/empresa" className="action-card">
           <h3>Registrar Empresa</h3>
           <p>Registra los datos de la empresa que deseas evaluar.</p>
-        </Link>
-        <Link to="/actividad" className="action-card">
-          <h3>Seleccionar Actividad</h3>
-          <p>Selecciona la actividad que realiza la empresa.</p>
         </Link>
         <Link to="/evaluacion" className="action-card">
           <h3>Realizar Evaluación</h3>
@@ -31,12 +31,10 @@ const UserHome = ({ usuario }) => {
           <h3>Matriz de Riesgos</h3>
           <p>Gestiona y analiza los riesgos de la empresa.</p>
         </Link>
-        <Link to="/matriz-mitigacion" className="action-card">
-          <h3>Matriz de Mitigación</h3>
-          <p>Crea y administra la matriz de mitigación de riesgos.</p>
-        </Link>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

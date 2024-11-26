@@ -1,69 +1,58 @@
-/* Paleta de colores */
-:root {
-    --azul-claro: #a8c8f7; /* Azul claro suave */
-    --azul-oscuro: #4a6aff; /* Azul más oscuro */
-    --blanco: #ffffff;
-    --gris-claro: #f2f2f2; /* Gris claro para bordes y fondo suave */
-    --gris-oscuro: #333333; /* Gris oscuro para texto */
-  }
-  
-  /* Contenedor principal */
-  .empresa-form {
-    background-color: var(--blanco);
-    border-radius: 8px;
-    padding: 30px 40px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    margin: 50px auto;
-    background: var(--gris-claro); /* Fondo suave y claro */
-  }
-  
-  /* Título */
-  .empresa-form h1 {
-    color: var(--azul-oscuro); /* Azul oscuro para el título */
-    margin-bottom: 20px;
-    font-size: 28px; /* Tamaño de fuente más grande */
-  }
-  
-  /* Formulario */
-  .empresa-form form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Campos del formulario */
-  .empresa-form label {
-    color: var(--gris-oscuro); /* Gris oscuro para los labels */
-    font-weight: bold;
-    margin-bottom: 5px;
-    text-align: left;
-    display: block;
-  }
-  
-  .empresa-form input {
-    width: 93%;
-    padding: 10px;
-    border: 1px solid var(--azul-oscuro); /* Borde azul oscuro */
-    border-radius: 5px;
-    font-size: 14px;
-    margin-bottom: 10px; /* Espacio entre los campos */
-  }
-  
-  /* Botón de guardar */
-  .empresa-form button {
-    background-color: var(--azul-oscuro);
-    color: var(--blanco);
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .empresa-form button:hover {
-    background-color: #2e4e8f; /* Azul más oscuro al pasar el mouse */
-  }
-  
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el cuerpo cubra toda la pantalla */
+  margin: 0;
+}
+
+.empresa-form-container {
+  flex: 1; /* Para que el contenido del formulario ocupe el espacio entre el Navbar y el Footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.empresa-form {
+  background-color: #f9f9f9; /* Fondo del formulario */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  margin-top: 100px;
+}
+
+.empresa-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.empresa-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.empresa-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.empresa-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.empresa-form button:hover {
+  background-color: #0056b3;
+}

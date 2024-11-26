@@ -1,0 +1,127 @@
+{
+    "FURPS": {
+      "Funcionalidad": [
+        { "item": "Funcionalidad", "descripcion": "¿El software cumple con los requisitos funcionales establecidos?" },
+        { "item": "Funcionalidad", "descripcion": "¿El software permite realizar todas las tareas especificadas?" },
+        { "item": "Funcionalidad", "descripcion": "¿El software maneja correctamente las excepciones y errores?" },
+        { "item": "Funcionalidad", "descripcion": "¿Las funciones implementadas son precisas?" },
+        { "item": "Funcionalidad", "descripcion": "¿El sistema cubre las necesidades funcionales del usuario?" }
+      ],
+      "Usabilidad": [
+        { "item": "Usabilidad", "descripcion": "¿La interfaz del software es fácil de usar?" },
+        { "item": "Usabilidad", "descripcion": "¿El software es intuitivo para nuevos usuarios?" },
+        { "item": "Usabilidad", "descripcion": "¿Los usuarios pueden completar tareas rápidamente?" },
+        { "item": "Usabilidad", "descripcion": "¿La navegación entre pantallas es sencilla?" },
+        { "item": "Usabilidad", "descripcion": "¿Los mensajes de error son claros y útiles?" }
+      ],
+      "Confiabilidad": [
+        { "item": "Confiabilidad", "descripcion": "¿El software mantiene su estabilidad durante el uso prolongado?" },
+        { "item": "Confiabilidad", "descripcion": "¿El software puede manejar fallos y recuperarse rápidamente?" },
+        { "item": "Confiabilidad", "descripcion": "¿El sistema es consistente en condiciones normales y límites?" },
+        { "item": "Confiabilidad", "descripcion": "¿El software ofrece redundancia para proteger datos críticos?" }
+      ],
+      "Rendimiento": [
+        { "item": "Rendimiento", "descripcion": "¿El tiempo de respuesta del sistema es adecuado?" },
+        { "item": "Rendimiento", "descripcion": "¿El software es eficiente con el uso de recursos?" },
+        { "item": "Rendimiento", "descripcion": "¿El sistema funciona correctamente bajo cargas pesadas?" }
+      ],
+      "Soportabilidad": [
+        { "item": "Soportabilidad", "descripcion": "¿El software puede ejecutarse en múltiples plataformas?" },
+        { "item": "Soportabilidad", "descripcion": "¿El software es fácil de instalar en diferentes entornos?" },
+        { "item": "Soportabilidad", "descripcion": "¿El sistema es adaptable a cambios futuros?" },
+        { "item": "Soportabilidad", "descripcion": "¿El software permite integrarse con otras herramientas?" },
+        { "item": "Soportabilidad", "descripcion": "¿Es sencillo trasladar el software a otras plataformas?" }
+      ]
+    },
+    "McCall": {
+      "Corrección": [
+        { "item": "Corrección", "descripcion": "¿El software genera los resultados esperados?" },
+        { "item": "Corrección", "descripcion": "¿El software está libre de errores críticos?" },
+        { "item": "Corrección", "descripcion": "¿Los resultados cumplen con los requisitos establecidos?" },
+        { "item": "Corrección", "descripcion": "¿El sistema gestiona adecuadamente los errores detectados?" },
+        { "item": "Corrección", "descripcion": "¿Los cálculos y datos son consistentes y precisos?" }
+      ],
+      "Fiabilidad": [
+        { "item": "Fiabilidad", "descripcion": "¿El software mantiene su funcionamiento continuo?" },
+        { "item": "Fiabilidad", "descripcion": "¿El sistema puede recuperarse de fallos menores?" },
+        { "item": "Fiabilidad", "descripcion": "¿Los errores no afectan la integridad de los datos?" },
+        { "item": "Fiabilidad", "descripcion": "¿El software es confiable durante operaciones críticas?" }
+      ],
+      "Eficiencia": [
+        { "item": "Eficiencia", "descripcion": "¿El software utiliza los recursos adecuadamente?" },
+        { "item": "Eficiencia", "descripcion": "¿El tiempo de respuesta es óptimo bajo diferentes condiciones?" },
+        { "item": "Eficiencia", "descripcion": "¿El sistema se desempeña bien con múltiples usuarios simultáneamente?" }
+      ],
+      "Integridad": [
+        { "item": "Integridad", "descripcion": "¿El software protege la información confidencial?" },
+        { "item": "Integridad", "descripcion": "¿El sistema evita accesos no autorizados?" },
+        { "item": "Integridad", "descripcion": "¿El software cumple con los estándares de seguridad requeridos?" }
+      ],
+      "Facilidad de Uso": [
+        { "item": "Facilidad de Uso", "descripcion": "¿El software es fácil de usar para usuarios sin experiencia?" },
+        { "item": "Facilidad de Uso", "descripcion": "¿El sistema ofrece soporte adecuado para nuevos usuarios?" },
+        { "item": "Facilidad de Uso", "descripcion": "¿La interfaz es amigable y funcional?" }
+      ]
+    },
+    "ISO 25000": {
+      "Adecuación Funcional": [
+        { "item": "Adecuación Funcional", "descripcion": "¿El software cumple con las funcionalidades requeridas?" },
+        { "item": "Adecuación Funcional", "descripcion": "¿Las características principales están claras?" },
+        { "item": "Adecuación Funcional", "descripcion": "¿El sistema satisface las necesidades explícitas del cliente?" },
+        { "item": "Adecuación Funcional", "descripcion": "¿El software cubre todos los casos de uso definidos?" }
+      ],
+      "Eficiencia de Desempeño": [
+        { "item": "Eficiencia de Desempeño", "descripcion": "¿El software responde en el tiempo esperado?" },
+        { "item": "Eficiencia de Desempeño", "descripcion": "¿El sistema utiliza los recursos eficientemente?" },
+        { "item": "Eficiencia de Desempeño", "descripcion": "¿El rendimiento es consistente bajo diferentes condiciones?" }
+      ],
+      "Compatibilidad": [
+        { "item": "Compatibilidad", "descripcion": "¿El software es interoperable con otros sistemas?" },
+        { "item": "Compatibilidad", "descripcion": "¿El sistema funciona adecuadamente en diferentes plataformas?" },
+        { "item": "Compatibilidad", "descripcion": "¿El software permite integración con herramientas externas?" }
+      ],
+      "Capacidad de Interacción": [
+        { "item": "Capacidad de Interacción", "descripcion": "¿La interfaz permite una interacción sencilla?" },
+        { "item": "Capacidad de Interacción", "descripcion": "¿El software es comprensible para los usuarios finales?" },
+        { "item": "Capacidad de Interacción", "descripcion": "¿El sistema ofrece accesibilidad para usuarios con discapacidades?" }
+      ],
+      "Fiabilidad": [
+        { "item": "Fiabilidad", "descripcion": "¿El sistema mantiene su estabilidad durante el uso prolongado?" },
+        { "item": "Fiabilidad", "descripcion": "¿El software puede manejar y recuperarse de fallos?" },
+        { "item": "Fiabilidad", "descripcion": "¿El sistema mantiene la integridad de los datos?" }
+      ],
+      "Seguridad": [
+        { "item": "Seguridad", "descripcion": "¿El software protege contra accesos no autorizados?" },
+        { "item": "Seguridad", "descripcion": "¿El sistema garantiza la confidencialidad de los datos?" },
+        { "item": "Seguridad", "descripcion": "¿El software cumple con los estándares de seguridad?" }
+      ]
+    },
+    "IEEE": {
+      "Funcionalidad": [
+        { "item": "Funcionalidad", "descripcion": "¿El sistema ofrece todas las funciones requeridas?" },
+        { "item": "Funcionalidad", "descripcion": "¿Las funcionalidades son precisas y confiables?" },
+        { "item": "Funcionalidad", "descripcion": "¿El software evita errores críticos en las operaciones?" }
+      ],
+      "Confiabilidad": [
+        { "item": "Confiabilidad", "descripcion": "¿El software funciona correctamente bajo diferentes escenarios?" },
+        { "item": "Confiabilidad", "descripcion": "¿El sistema recupera su estado normal tras fallos?" },
+        { "item": "Confiabilidad", "descripcion": "¿El software mantiene su disponibilidad durante uso continuo?" }
+      ],
+      "Mantenibilidad": [
+        { "item": "Mantenibilidad", "descripcion": "¿El software es fácil de actualizar y mejorar?" },
+        { "item": "Mantenibilidad", "descripcion": "¿El sistema está bien documentado para desarrolladores?" },
+        { "item": "Mantenibilidad", "descripcion": "¿Los cambios en el software no afectan otras funcionalidades?" }
+      ],
+      "Portabilidad": [
+        { "item": "Portabilidad", "descripcion": "¿El sistema puede instalarse en diferentes plataformas?" },
+        { "item": "Portabilidad", "descripcion": "¿El software requiere cambios mínimos al migrar?" },
+        { "item": "Portabilidad", "descripcion": "¿El sistema mantiene sus capacidades en diversos entornos?" }
+      ],
+      "Rendimiento": [
+        { "item": "Rendimiento", "descripcion": "¿El software responde en tiempos adecuados?" },
+        { "item": "Rendimiento", "descripcion": "¿El sistema utiliza eficientemente los recursos disponibles?" },
+        { "item": "Rendimiento", "descripcion": "¿El rendimiento es estable en diferentes condiciones de carga?" }
+      ]
+    }
+  }
+  

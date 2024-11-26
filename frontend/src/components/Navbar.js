@@ -15,9 +15,6 @@ const Navbar = () => {
             <Link to="/empresa">Registrar Empresa</Link>
           </li>
           <li>
-            <Link to="/actividad">Seleccionar Actividad</Link>
-          </li>
-          <li>
             <Link to="/evaluacion">Realizar Evaluación</Link>
           </li>
           <li>
