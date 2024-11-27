@@ -14,6 +14,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import EvaluacionTabla from './components/EvaluacionTabla';
 
+
 function App() {
   return (
     <Router>
@@ -29,6 +30,7 @@ function App() {
         <Route path="/matriz-mitigacion" element={<MatrizMitigacionRiesgos />} />
         <Route path="/eliminar" element={<EliminarDatos />} />
         <Route path='/UserHome' element={<UserHome />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/EvaluacionTabla' element={<EvaluacionTabla />} />
       </Routes>
       </div>

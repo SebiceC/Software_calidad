@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/UserHome.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import axios from 'axios';
 
 const UserHome = ({ usuario }) => {
+
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Hacer la solicitud GET para obtener usuarios desde el backend
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/users'); // Llamada al API Gateway
+        setUsers(response.data); // Guardar los usuarios en el estado
+      } catch (error) {
+        setError('Error al obtener los usuarios'); // Manejar errores
+      }
+    };
+
+    fetchUsers();
+  }, []); // Este efecto solo se ejecuta una vez al cargar el componente
+
+
   return (
     <>
     <Navbar />
