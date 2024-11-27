@@ -1,4 +1,5 @@
 from flask import jsonify
+from fpdf import FPDF
 from model import (
     get_all_users_db,
     create_user_db,
@@ -10,6 +11,7 @@ from model import (
     create_company_db,
     get_all_evaluations_db,
     create_evaluation_db,
+    get_evaluation_details
 )
 from bcrypt import checkpw
 
@@ -167,3 +169,36 @@ def create_evaluation_service(data):
         return jsonify({"message": "Evaluacion presentada con exito", "evaluation_id": new_evaluation}), 201
     except Exception as e:
         return jsonify({"error": f"Error al enviar la evaluacion: {str(e)}"}), 500
+    
+def generate_evaluation_pdf(evaluation_id):
+    """Genera un archivo PDF con los detalles de una evaluación."""
+    # Obtener los detalles de la evaluación
+    evaluation = get_evaluation_details(evaluation_id)
+    if not evaluation:
+        raise ValueError("Evaluación no encontrada.")
+    
+    # Crear un objeto PDF
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    # Título
+    pdf.set_font("Arial", style='B', size=16)
+    pdf.cell(200, 10, txt="Resultados de la Evaluación", ln=True, align="C")
+    pdf.ln(10)  # Espacio
+
+    # Detalles
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt=f"ID Evaluación: {evaluation['id_evaluacion']}", ln=True)
+    pdf.cell(200, 10, txt=f"Empresa: {evaluation['empresa_nombre']}", ln=True)
+    pdf.cell(200, 10, txt=f"Usuario: {evaluation['usuario_nombre']}", ln=True)
+    pdf.cell(200, 10, txt=f"Fecha de Evaluación: {evaluation['fecha_evaluacion']}", ln=True)
+    pdf.cell(200, 10, txt=f"Puntaje Total: {evaluation['puntaje_total']}", ln=True)
+    pdf.cell(200, 10, txt=f"Porcentaje Total: {evaluation['porcentaje_total']}%", ln=True)
+    pdf.cell(200, 10, txt=f"Resultado: {evaluation['resultado']}", ln=True)
+
+    # Guardar el PDF en un archivo temporal
+    file_path = f"evaluacion_{evaluation_id}.pdf"
+    pdf.output(file_path)
+
+    return file_path
