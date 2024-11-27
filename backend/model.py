@@ -17,17 +17,94 @@ def get_all_users_db():
 def create_user_db(data):
     """Crear un nuevo usuario en la base de datos."""
     connection = get_connection()
-    cursor = connection.cursor()
-    query = """
-        INSERT INTO Usuarios (nombre, correo, contraseña, rol)
-        VALUES (%s, %s, %s, %s) RETURNING id_usuario
-    """
-    cursor.execute(query, (data["nombre"], data["correo"], data["contraseña"], data["rol"]))
-    user_id = cursor.fetchone()[0]
-    connection.commit()
-    cursor.close()
-    connection.close()
-    return {"id_usuario": user_id, **data}
+    if connection is None:
+        return {"error": "Fallo conexion a la base de datos"}
+
+    try:
+        cursor = connection.cursor()
+        query = """
+            INSERT INTO Usuarios (nombre, correo, contraseña, rol)
+            VALUES (%s, %s, %s, %s)
+            RETURNING id_usuario, nombre, correo, rol, created_at
+        """
+        values = (data["nombre"], data["correo"], data["contraseña"], data["rol"])
+        cursor.execute(query, values)
+        new_user = cursor.fetchone()
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        # Convertir el resultado a un diccionario
+        return {
+            "id_usuario": new_user[0],
+            "nombre": new_user[1],
+            "correo": new_user[2],
+            "rol": new_user[3],
+            "created_at": new_user[4]
+        }
+    except Exception as e:
+        return {"error": str(e)}
+    
+
+def get_user_by_email_db(correo):
+    """Obtener un usuario de la base de datos por su correo."""
+    connection = get_connection()
+    if connection is None:
+        return None
+
+    try:
+        cursor = connection.cursor()
+        query = "SELECT id_usuario, nombre, correo, contraseña, rol FROM Usuarios WHERE correo = %s"
+        cursor.execute(query, (correo,))
+        row = cursor.fetchone()
+        cursor.close()
+        connection.close()
+
+        if row:
+            return {
+                "id_usuario": row[0],
+                "nombre": row[1],
+                "correo": row[2],
+                "contraseña": row[3],
+                "rol": row[4]
+            }
+        return None
+    except Exception as e:
+        return None
+    
+def get_criteria_by_norms_db(norms):
+    """Obtener criterios filtrados por normas y ordenados por porcentaje."""
+    connection = get_connection()
+    if connection is None:
+        return {"error": "Fallo conexion a la base de datos"}
+
+    try:
+        cursor = connection.cursor()
+        query = """
+            SELECT id_criterio, nombre, descripcion, porcentaje, norma
+            FROM Criterios
+            WHERE norma = ANY(%s)
+            ORDER BY porcentaje DESC
+        """
+        cursor.execute(query, (norms,))
+        rows = cursor.fetchall()
+        cursor.close()
+        connection.close()
+
+        # Convertir los resultados en una lista de diccionarios
+        criteria = [
+            {
+                "id_criterio": row[0],
+                "nombre": row[1],
+                "descripcion": row[2],
+                "porcentaje": row[3],
+                "norma": row[4]
+            }
+            for row in rows
+        ]
+        return criteria
+    except Exception as e:
+        return {"error": str(e)}
 
 # ---- Funciones para Empresas ----
 
@@ -76,16 +153,42 @@ def get_all_evaluations_db():
 
 
 def create_evaluation_db(data):
-    """Crear una nueva evaluación en la base de datos."""
+    """Registrar una evaluación y sus criterios."""
     connection = get_connection()
-    cursor = connection.cursor()
-    query = """
-        INSERT INTO Evaluaciones (id_empresa, id_usuario, puntaje_total, porcentaje_total, resultado)
-        VALUES (%s, %s, %s, %s, %s) RETURNING id_evaluacion
-    """
-    cursor.execute(query, (data["id_empresa"], data["id_usuario"], data["puntaje_total"], data["porcentaje_total"], data["resultado"]))
-    evaluation_id = cursor.fetchone()[0]
-    connection.commit()
-    cursor.close()
-    connection.close()
-    return {"id_evaluacion": evaluation_id, **data}
+    if connection is None:
+        return {"error": "Database connection failed"}
+
+    try:
+        cursor = connection.cursor()
+
+        # Insertar en Evaluaciones
+        query_evaluation = """
+            INSERT INTO Evaluaciones (id_empresa, id_usuario)
+            VALUES (%s, %s)
+            RETURNING id_evaluacion
+        """
+        cursor.execute(query_evaluation, (data["id_empresa"], data["id_usuario"]))
+        evaluation_id = cursor.fetchone()[0]
+
+        # Insertar criterios evaluados
+        query_criteria = """
+            INSERT INTO DetallesEvaluacion (id_detalle_eva, id_evaluacion, id_criterio, valor, observaciones)
+            VALUES (%s, %s, %s, %s)
+        """
+        for criterio in data["criterios"]:
+            cursor.execute(
+                query_criteria,
+                (
+                    evaluation_id,
+                    criterio["id_criterio"],
+                    criterio["valor"],
+                    criterio.get("observaciones", None),
+                ),
+            )
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return evaluation_id
+    except Exception as e:
+        return {"error": str(e)}
