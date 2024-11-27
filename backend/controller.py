@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_file
 from service import (
     get_all_users_service,
     create_user_service,
@@ -9,7 +9,8 @@ from service import (
     get_all_companies_service,
     create_company_service,
     get_all_evaluations_service,
-    create_evaluation_service
+    create_evaluation_service,
+    generate_evaluation_pdf
 )
 
 controller = Blueprint('controller', __name__)
@@ -80,3 +81,14 @@ def submit_evaluation():
     """Ruta para enviar una evaluación de software."""
     data = request.json
     return create_evaluation_service(data)
+
+@controller.route('/evaluations/<int:evaluation_id>/download', methods=['GET'])
+def download_evaluation_pdf(evaluation_id):
+    """Genera y permite la descarga del PDF de una evaluación."""
+    try:
+        pdf_file_path = generate_evaluation_pdf(evaluation_id)
+        return send_file(pdf_file_path, as_attachment=True)
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
