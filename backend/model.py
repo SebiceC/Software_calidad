@@ -192,72 +192,36 @@ def create_evaluation_db(data):
         return evaluation_id
     except Exception as e:
         return {"error": str(e)}
-    
-def update_user_db(user_id, data):
-    """Actualizar un usuario en la base de datos."""
+
+def get_evaluation_details(evaluation_id):
+    """Obtiene los detalles de una evaluación por su ID."""
     connection = get_connection()
-    if connection is None:
-        return {"error": "Fallo conexion a la base de datos"}
-
+    if not connection:
+        raise Exception("No se pudo conectar con la base de datos.")
     try:
-        cursor = connection.cursor()
-
-        # Verificar si el usuario existe
-        cursor.execute("SELECT * FROM Usuarios WHERE id_usuario = %s", (user_id,))
-        user = cursor.fetchone()
-
-        if not user:
-            return None  # Usuario no encontrado
-
-        # Construir la consulta de actualización
-        query = """
-            UPDATE Usuarios
-            SET nombre = %s, correo = %s, contraseña = %s, rol = %s
-            WHERE id_usuario = %s
-            RETURNING id_usuario, nombre, correo, rol, created_at
-        """
-        values = (data["nombre"], data["correo"], data["contraseña"], data["rol"], user_id)
-        cursor.execute(query, values)
-        updated_user = cursor.fetchone()
-
-        connection.commit()
-        cursor.close()
-        connection.close()
-
-        return {
-            "id_usuario": updated_user[0],
-            "nombre": updated_user[1],
-            "correo": updated_user[2],
-            "rol": updated_user[3],
-            "created_at": updated_user[4]
-        }
-    except Exception as e:
-        return {"error": str(e)}
-
-def delete_user_db(user_id):
-    """Eliminar un usuario de la base de datos."""
-    connection = get_connection()
-    if connection is None:
-        return {"error": "Fallo conexion a la base de datos"}
-
-    try:
-        cursor = connection.cursor()
-
-        # Verificar si el usuario existe
-        cursor.execute("SELECT * FROM Usuarios WHERE id_usuario = %s", (user_id,))
-        user = cursor.fetchone()
-
-        if not user:
-            return None  # Usuario no encontrado
-
-        # Eliminar el usuario
-        cursor.execute("DELETE FROM Usuarios WHERE id_usuario = %s", (user_id,))
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-
-        return True  # Usuario eliminado con éxito
-    except Exception as e:
-        return {"error": str(e)}
-
+        with connection.cursor() as cursor:
+            query = """
+                SELECT 
+                    e.id_evaluacion, e.fecha_evaluacion, e.puntaje_total, e.porcentaje_total, e.resultado,
+                    emp.nombre AS empresa_nombre, u.nombre AS usuario_nombre
+                FROM Evaluaciones e
+                JOIN Empresas emp ON e.id_empresa = emp.id_empresa
+                JOIN Usuarios u ON e.id_usuario = u.id_usuario
+                WHERE e.id_evaluacion = %s;
+            """
+            cursor.execute(query, (evaluation_id,))
+            evaluation = cursor.fetchone()
+            if evaluation:
+                return {
+                    "id_evaluacion": evaluation[0],
+                    "fecha_evaluacion": evaluation[1],
+                    "puntaje_total": evaluation[2],
+                    "porcentaje_total": evaluation[3],
+                    "resultado": evaluation[4],
+                    "empresa_nombre": evaluation[5],
+                    "usuario_nombre": evaluation[6],
+                }
+            else:
+                return None
+    finally:
+        release_connection(connection)
