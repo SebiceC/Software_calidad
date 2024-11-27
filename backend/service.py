@@ -4,11 +4,14 @@ from model import (
     create_user_db,
     update_user_db,
     delete_user_db,
+    get_user_by_email_db,
+    get_criteria_by_norms_db,
     get_all_companies_db,
     create_company_db,
     get_all_evaluations_db,
     create_evaluation_db,
 )
+from bcrypt import checkpw
 
 # ---- Funciones para Usuarios ----
 
@@ -60,8 +63,54 @@ def delete_user_service(user_id):
             return jsonify({"error": "Usuario no encontrado"}), 404
     except Exception as e:
         return jsonify({"error": f"Error al eliminar usuario: {str(e)}"}), 500
+    
+def login_service(data):
+    """Servicio para manejar el inicio de sesión."""
+    try:
+        required_fields = ["correo", "contraseña"]
+        for field in required_fields:
+            if field not in data or not data[field]:
+                return jsonify({"error": f"Missing field: {field}"}), 400
 
+        # Obtener el usuario de la base de datos por correo
+        user = get_user_by_email_db(data["correo"])
+        if not user:
+            return jsonify({"error": "Invalid email or password"}), 401
 
+        # Verificar la contraseña
+        if not checkpw(data["contraseña"].encode('utf-8'), user["contraseña"].encode('utf-8')):
+            return jsonify({"error": "Invalid email or password"}), 401
+
+        # Respuesta exitosa con detalles del usuario (sin incluir la contraseña)
+        return jsonify({
+            "message": "Login successful",
+            "user": {
+                "id_usuario": user["id_usuario"],
+                "nombre": user["nombre"],
+                "correo": user["correo"],
+                "rol": user["rol"]
+            }
+        }), 200
+    except Exception as e:
+        return jsonify({"error": f"Error during login: {str(e)}"}), 500
+    
+def get_criteria_by_norms_service(norms):
+    """Servicio para obtener criterios filtrados por normas."""
+    try:
+        if not norms:
+            return jsonify({"error": "No norms provided"}), 400
+
+        # Validar que las normas sean válidas
+        valid_norms = {'ISO25000', 'IEEE', 'FURPS', 'McCall'}
+        invalid_norms = [norm for norm in norms if norm not in valid_norms]
+        if invalid_norms:
+            return jsonify({"error": f"Invalid norms: {', '.join(invalid_norms)}"}), 400
+
+        criteria = get_criteria_by_norms_db(norms)
+        return jsonify(criteria), 200
+    except Exception as e:
+        return jsonify({"error": f"Error retrieving criteria: {str(e)}"}), 500
+    
 # ---- Funciones para Empresas ----
 
 def get_all_companies_service():
@@ -99,14 +148,22 @@ def get_all_evaluations_service():
 
 
 def create_evaluation_service(data):
-    """Servicio para crear una nueva evaluación."""
+    """Servicio para registrar una evaluación."""
     try:
-        required_fields = ["id_empresa", "id_usuario", "puntaje_total", "porcentaje_total", "resultado"]
+        required_fields = ["id_empresa", "id_usuario", "criterios"]
         for field in required_fields:
             if field not in data:
                 return jsonify({"error": f"Campo faltante: {field}"}), 400
 
+        criterios = data["criterios"]
+        if not isinstance(criterios, list) or not criterios:
+            return jsonify({"error": "Invalido or faltante 'criterios' field"}), 400
+
+        # Registrar la evaluación
         new_evaluation = create_evaluation_db(data)
-        return jsonify({"message": "Evaluacion creada satisfactoriamente", "evaluation": new_evaluation}), 201
+        if "error" in new_evaluation:
+            return jsonify(new_evaluation), 500
+
+        return jsonify({"message": "Evaluacion presentada con exito", "evaluation_id": new_evaluation}), 201
     except Exception as e:
-        return jsonify({"error": f"Error al crear la evaluacion: {str(e)}"}), 500
+        return jsonify({"error": f"Error al enviar la evaluacion: {str(e)}"}), 500
