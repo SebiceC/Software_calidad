@@ -122,17 +122,30 @@ def get_all_companies_db():
 
 def create_company_db(data):
     """Crear una nueva empresa en la base de datos."""
+    # Conexión a la base de datos
     connection = get_connection()
     cursor = connection.cursor()
+    
+    # Consulta SQL para insertar una nueva empresa
     query = """
-        INSERT INTO Empresas (nombre, direccion, sector)
-        VALUES (%s, %s, %s) RETURNING id_empresa
+        INSERT INTO Empresas (nombre, ciudad, email, telefono, nombre_software)
+        VALUES (%s, %s, %s, %s, %s) RETURNING id_empresa
     """
-    cursor.execute(query, (data["nombre"], data["direccion"], data["sector"]))
+    
+    # Ejecutar la consulta con los datos proporcionados
+    cursor.execute(query, (data["nombre"], data["ciudad"], data["email"], data["telefono"], data["nombre_software"]))
+    
+    # Obtener el id de la empresa recién insertada
     company_id = cursor.fetchone()[0]
+    
+    # Confirmar los cambios en la base de datos
     connection.commit()
+    
+    # Cerrar la conexión y el cursor
     cursor.close()
     connection.close()
+    
+    # Retornar los datos con el id de la empresa
     return {"id_empresa": company_id, **data}
 
 # ---- Funciones para Evaluaciones ----

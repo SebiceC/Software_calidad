@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from model import get_all_users_db, create_user_db, get_user_by_email_db
+from model import get_all_users_db, create_user_db, get_user_by_email_db, create_company_db
 import psycopg2
 
 
@@ -54,44 +54,14 @@ def login():
 def register_company():
     data = request.get_json()  # Recibe los datos del formulario como JSON
     
-    # Obtener los campos del formulario
-    nombre = data.get('nombre')
-    ciudad = data.get('ciudad')
-    email = data.get('email')
-    telefono = data.get('telefono')
-    nombre_software = data.get('nombre_software')
-
-    # Validar que los campos no estén vacíos
-    if not nombre or not ciudad or not email or not telefono or not nombre_software:
-        return jsonify({"error": "Todos los campos son requeridos"}), 400
-
-    # Conexión a la base de datos
+    # Llamar a la función para crear la empresa en la base de datos
     try:
-        connection = psycopg2.connect(
-            host="localhost",  # Cambiar por tu configuración de conexión
-            database="calidad",  # Nombre de la base de datos
-            user="usuario",  # Tu usuario de base de datos
-            password="contraseña"  # Tu contraseña de base de datos
-        )
-        cursor = connection.cursor()
-        
-        # Consulta SQL para insertar una nueva empresa
-        query = """
-        INSERT INTO empresas (nombre, ciudad, email, telefono, nombre_software)
-        VALUES (%s, %s, %s, %s, %s)
-        """
-        cursor.execute(query, (nombre, ciudad, email, telefono, nombre_software))
-        
-        # Confirmar los cambios
-        connection.commit()
-        
-        cursor.close()
-        connection.close()
-
-        return jsonify({"message": "Empresa registrada exitosamente"}), 201
+        result = create_company_db(data)
+        return jsonify({"message": "Empresa registrada exitosamente", "empresa": result}), 201
     except Exception as e:
         print(f"Error al registrar la empresa: {e}")
         return jsonify({"error": "Hubo un problema al registrar la empresa"}), 500
+
 
 
 

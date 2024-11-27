@@ -28,7 +28,6 @@ function App() {
         <Route path="/resultados" element={<Resultados />} />
         <Route path="/matriz-riesgos" element={<MatrizRiesgos />} />
         <Route path="/matriz-mitigacion" element={<MatrizMitigacionRiesgos />} />
-        <Route path="/eliminar" element={<EliminarDatos />} />
         <Route path='/UserHome' element={<UserHome />} />
         <Route path='/login' element={<Login />} />
         <Route path='/EvaluacionTabla' element={<EvaluacionTabla />} />

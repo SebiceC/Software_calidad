@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import "../styles/EmpresaForm.css"; // Asegúrate de que el archivo CSS esté en la ruta correcta
 import Navbar from './Navbar';
 import Footer from './Footer';
-import axios
- from 'axios';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EmpresaForm = () => {
-  const [empresa, setEmpresa] = useState({
+  const [formData, setFormData] = useState({
     nombre: '',
     nombre_software: '',
     ciudad: '',
@@ -14,9 +14,11 @@ const EmpresaForm = () => {
     email: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEmpresa({ ...empresa, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -24,6 +26,7 @@ const EmpresaForm = () => {
     try {
       const response = await axios.post('http://localhost:5000/register_company', formData);
       alert(response.data.message);  // Mostrar mensaje de éxito
+      navigate('/UserHome');
     } catch (error) {
       alert('Hubo un error al registrar la empresa');
     }
@@ -39,31 +42,31 @@ const EmpresaForm = () => {
             <label>Nombre:</label>
             <input
               name="nombre"
-              value={empresa.nombre}
+              value={formData.nombre}
               onChange={handleChange}
             />
             <label>Nombre del software:</label>
             <input
               name="nombre_software"
-              value={empresa.nombre_software}
+              value={formData.nombre_software}
               onChange={handleChange}
             />
             <label>Ciudad:</label>
             <input
               name="ciudad"
-              value={empresa.ciudad}
+              value={formData.ciudad}
               onChange={handleChange}
             />
             <label>Teléfono:</label>
             <input
               name="telefono"
-              value={empresa.telefono}
+              value={formData.telefono}
               onChange={handleChange}
             />
             <label>Email:</label>
             <input
               name="email"
-              value={empresa.email}
+              value={formData.email}
               onChange={handleChange}
             />
             <button type="submit">Guardar</button>
