@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import "../styles/EmpresaForm.css"; // Asegúrate de que el archivo CSS esté en la ruta correcta
 import Navbar from './Navbar';
 import Footer from './Footer';
+import axios
+ from 'axios';
 
 const EmpresaForm = () => {
   const [empresa, setEmpresa] = useState({
@@ -17,11 +19,14 @@ const EmpresaForm = () => {
     setEmpresa({ ...empresa, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Datos de la empresa:', empresa);
-    alert('Empresa registrada con éxito');
-    // Aquí puedes enviar los datos a un backend
+    try {
+      const response = await axios.post('http://localhost:5000/register_company', formData);
+      alert(response.data.message);  // Mostrar mensaje de éxito
+    } catch (error) {
+      alert('Hubo un error al registrar la empresa');
+    }
   };
 
   return (
