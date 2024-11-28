@@ -11,7 +11,13 @@ from model import (
     create_company_db,
     get_all_evaluations_db,
     create_evaluation_db,
-    get_evaluation_details
+    get_evaluation_details,
+    get_all_risk_matrices_db,
+    create_risk_matrix_db,
+    update_risk_matrix_db,
+    delete_risk_matrix_db,
+    get_risk_matrix_details_db,
+    create_mitigation_matrix
 )
 from bcrypt import checkpw
 
@@ -202,3 +208,63 @@ def generate_evaluation_pdf(evaluation_id):
     pdf.output(file_path)
 
     return file_path
+
+# ---- Funciones para las Matrices de Riesgo ----
+
+def get_all_risk_matrices_service():
+    """Servicio para obtener todas las matrices de riesgo."""
+    try:
+        matrices = get_all_risk_matrices_db()
+        return jsonify(matrices), 200
+    except Exception as e:
+        return jsonify({"error": f"Error al recuperar matrices de riesgo: {str(e)}"}), 500
+
+
+def create_risk_matrix_service(data):
+    """Servicio para crear una nueva matriz de riesgo."""
+    try:
+        required_fields = ["codigo_riesgo", "descripcion", "fase", "probabilidad", "impacto"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Campo faltante: {field}"}), 400
+
+        new_matrix = create_risk_matrix_db(data)
+        return jsonify({"message": "Matriz de riesgo creada satisfactoriamente", "matrix": new_matrix}), 201
+    except Exception as e:
+        return jsonify({"error": f"Error creando matriz de riesgo: {str(e)}"}), 500
+
+
+def update_risk_matrix_service(matrix_id, data):
+    """Servicio para actualizar una matriz de riesgo."""
+    try:
+        updated_matrix = update_risk_matrix_db(matrix_id, data)
+        if updated_matrix:
+            return jsonify({"message": "Matriz de riesgo actualizada satisfactoriamente", "matrix": updated_matrix}), 200
+        else:
+            return jsonify({"error": "Matriz de riesgo no encontrada"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Error al actualizar la matriz de riesgo: {str(e)}"}), 500
+
+
+def delete_risk_matrix_service(matrix_id):
+    """Servicio para eliminar una matriz de riesgo."""
+    try:
+        result = delete_risk_matrix_db(matrix_id)
+        if result:
+            return jsonify({"message": "Matriz de riesgo eliminada satisfactoriamente"}), 200
+        else:
+            return jsonify({"error": "Matriz de riesgo no encontrada"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Error al eliminar matriz de riesgo: {str(e)}"}), 500
+    
+def create_mitigation_matrix_service(data):
+    """Servicio para crear una matriz de mitigación."""
+    required_fields = ["id_empresa", "id_usuario", "id_matriz_ries", "detalles"]
+    for field in required_fields:
+        if field not in data:
+            raise ValueError(f"Falta el campo requerido: {field}")
+
+    if not isinstance(data["detalles"], list) or not data["detalles"]:
+        raise ValueError("Los detalles deben ser una lista no vacía.")
+
+    return create_mitigation_matrix(data)
