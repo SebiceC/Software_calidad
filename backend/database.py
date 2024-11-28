@@ -14,3 +14,8 @@ def get_connection():
     except Exception as e:
         print(f"Error connecting to the database: {e}")
         return None
+    
+def release_connection(connection):
+    """Liberar la conexión a la base de datos."""
+    if connection:
+        connection.close()

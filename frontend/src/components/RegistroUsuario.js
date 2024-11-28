@@ -86,6 +86,7 @@ const RegistroUsuario = () => {
         <div className="form-group">
           <label htmlFor="nombre">Nombre completo</label>
           <input
+            className='input-registrar-usuario'
             type="text"
             id="nombre"
             name="nombre"
@@ -98,6 +99,7 @@ const RegistroUsuario = () => {
         <div className="form-group">
           <label htmlFor="email">Correo Electrónico</label>
           <input
+            className='input-registrar-usuario'
             type="email"
             id="email"
             name="email"
@@ -110,6 +112,7 @@ const RegistroUsuario = () => {
         <div className="form-group">
           <label htmlFor="password">Contraseña</label>
           <input
+            className='input-registrar-usuario'
             type="password"
             id="password"
             name="password"
@@ -122,6 +125,7 @@ const RegistroUsuario = () => {
         <div className="form-group">
           <label htmlFor="confirmPassword">Confirmar Contraseña</label>
           <input
+            className='input-registrar-usuario'
             type="password"
             id="confirmPassword"
             name="confirmPassword"

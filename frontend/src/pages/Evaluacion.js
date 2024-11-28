@@ -1,15 +1,42 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Evaluacion.css";
-import preguntas from "../data/preguntas.json"; // Importa el banco de preguntas
-import { obtenerPreguntasPorNormaYCriterio } from "../utils/utils"; // Importa la función utilitaria
+import preguntas from "../data/preguntas.json";
+import { obtenerPreguntasPorNormaYCriterio } from "../utils/utils";
 
 const EvaluacionFlujo = () => {
   const [paso, setPaso] = useState(1);
   const [tipoSoftware, setTipoSoftware] = useState("");
   const [norma, setNorma] = useState("");
   const [criterios, setCriterios] = useState([]);
-  const navigate = useNavigate(); // Inicializa navigate
+  const [empresas, setEmpresas] = useState([]);
+  const [empresaSeleccionada, setEmpresaSeleccionada] = useState(""); // Estado para la empresa seleccionada
+  const [nombreSoftware, setNombreSoftware] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/compañias")
+      .then((response) => {
+        console.log(response.data);
+        setEmpresas(response.data.empresas); // Actualiza el estado con las empresas
+      })
+      .catch((error) => {
+        console.error("Error al obtener las empresas:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const empresa = empresas.find((empresa) => empresa.id_empresa === empresaSeleccionada);
+    
+    if (empresa) {
+      setNombreSoftware(empresa.nombre_software);
+      console.log("Software seleccionado:", empresa.nombre_software); // Este log debería aparecer aquí
+    }
+  }, [empresaSeleccionada, empresas]);  // Este useEffect se dispara cuando `empresaSeleccionada` o `empresas` cambian
+  
+  
 
   const criteriosPorNorma = {
     "Software Bancario": {
@@ -89,7 +116,7 @@ const EvaluacionFlujo = () => {
   const handleSubmitSoftware = (e) => {
     e.preventDefault();
     if (tipoSoftware) {
-      setPaso(2);
+      setPaso(3);
     } else {
       alert("Por favor selecciona un tipo de software.");
     }
@@ -98,7 +125,7 @@ const EvaluacionFlujo = () => {
   const handleSubmitNorma = (e) => {
     e.preventDefault();
     if (norma) {
-      setPaso(3);
+      setPaso(4);
     } else {
       alert("Por favor selecciona una norma.");
     }
@@ -119,11 +146,55 @@ const EvaluacionFlujo = () => {
     navigate("/evaluacionTabla", { state: datosEvaluacion }); // Redirige con datos
   };
 
+  // Definir las funciones faltantes
+  const handleSelectEmpresa = (e) => {
+    const selectedEmpresaId = e.target.value;
+    console.log("ID de empresa seleccionada:", selectedEmpresaId);  // Verifica el ID seleccionado
+  
+    // Verifica que el ID de empresa no esté vacío
+    if (selectedEmpresaId !== "") {
+      setEmpresaSeleccionada(selectedEmpresaId);  // Actualiza el estado de la empresa seleccionada
+    } else {
+      setNombreSoftware("");  // Si no hay empresa seleccionada, resetea el software
+    }
+  };
+  
+  
+
+  const handleSubmitEmpresa = (e) => {
+    e.preventDefault();
+    if (empresaSeleccionada) {
+      setPaso(2); // Continúa al siguiente paso
+    } else {
+      alert("Por favor selecciona una empresa.");
+    }
+  };
+
   return (
     <div className="evaluacion-flujo">
       <h1>Realizar Evaluación</h1>
 
       {paso === 1 && (
+        <form onSubmit={handleSubmitEmpresa}>
+          <label>Selecciona la Empresa:</label>
+          <select value={empresaSeleccionada} onChange={handleSelectEmpresa}>
+            <option value="">Seleccione una empresa</option>
+            {empresas.map((empresa) => (
+              <option key={empresa.id_empresa} value={empresa.id_empresa}>
+                {empresa.nombre}
+              </option>
+            ))}
+          </select>
+          {empresaSeleccionada && (
+            <div>
+              <p><strong>Software seleccionado:</strong> {nombreSoftware}</p>
+            </div>
+          )}
+          <button type="submit">Continuar</button>
+        </form>
+      )}
+
+      {paso === 2 && (
         <form className="seleccionar-tipo-software" onSubmit={handleSubmitSoftware}>
           <label>Selecciona el Tipo de Software:</label>
           <select className="selector-tipo-software" value={tipoSoftware} onChange={handleSelectSoftware}>
@@ -135,7 +206,7 @@ const EvaluacionFlujo = () => {
         </form>
       )}
 
-      {paso === 2 && (
+      {paso === 3 && (
         <form onSubmit={handleSubmitNorma}>
           <label>Selecciona la Norma:</label>
           <div className="normas">
@@ -157,7 +228,7 @@ const EvaluacionFlujo = () => {
         </form>
       )}
 
-      {paso === 3 && (
+      {paso === 4 && (
         <div className="criterios-container">
           <h2>Criterios Aplicados ({norma})</h2>
           <ul className="criterios-list">
@@ -167,7 +238,7 @@ const EvaluacionFlujo = () => {
               </li>
             ))}
           </ul>
-          <button onClick={handleSubmitEvaluacion}>Guardar Evaluación</button>
+          <button onClick={handleSubmitEvaluacion}>Evaluar</button>
         </div>
       )}
     </div>

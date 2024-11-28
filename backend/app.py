@@ -1,13 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from model import get_all_users_db, create_user_db, get_user_by_email_db, create_company_db
+from model import create_user_db, get_user_by_email_db, create_company_db
 import psycopg2
+from service import get_all_companies_service
 
 
 app = Flask(__name__)
 CORS(app)
-
-
 
 @app.route('/usuarios', methods=['POST'])
 def create_usuario():
@@ -62,8 +61,10 @@ def register_company():
         print(f"Error al registrar la empresa: {e}")
         return jsonify({"error": "Hubo un problema al registrar la empresa"}), 500
 
+@app.route('/compañias', methods=['GET'])
+def get_companies():
 
-
+    return get_all_companies_service()
 
 if __name__ == '__main__':
     app.run(debug=True)

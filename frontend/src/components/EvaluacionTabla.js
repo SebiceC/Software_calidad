@@ -20,6 +20,7 @@ const EvaluacionTabla = () => {
   const [valores, setValores] = useState({});
   const [observaciones, setObservaciones] = useState({});
   const [resultados, setResultados] = useState(null);
+  const [porcentajeTotal, setPorcentajeTotal] = useState(null);
 
   const handleValorChange = (pregunta, value) => {
     setValores((prev) => ({
@@ -58,19 +59,27 @@ const EvaluacionTabla = () => {
     return resultadosPorCriterio;
   };
 
-  const handleVerResultados = async () => {
-    // Calcula los resultados
-    const resultadosCalculados = calcularResultados();
+  const calcularPorcentajeTotal = (resultadosPorCriterio) => {
+    const totalPorcentajes = resultadosPorCriterio.reduce(
+      (suma, resultado) => suma + parseFloat(resultado.porcentaje),
+      0
+    );
+    return (totalPorcentajes / resultadosPorCriterio.length).toFixed(2);
+  };
 
-    // Simula el guardado en la base de datos (puedes reemplazarlo con una API real)
+  const handleVerResultados = async () => {
+    const resultadosCalculados = calcularResultados();
+    const porcentajeTotalCalculado = calcularPorcentajeTotal(resultadosCalculados);
+
     console.log("Guardando en la base de datos:", {
       tipoSoftware,
       norma,
       resultadosCalculados,
+      porcentajeTotal: porcentajeTotalCalculado,
     });
 
-    // Actualiza el estado para mostrar los resultados
     setResultados(resultadosCalculados);
+    setPorcentajeTotal(porcentajeTotalCalculado);
   };
 
   const handleMatrizRiesgos = () => {
@@ -83,86 +92,102 @@ const EvaluacionTabla = () => {
 
   return (
     <div className="evaluacion-tabla-page">
-      <Navbar /> 
-        <div className="evaluacion-tabla-container">
-          <h1>Evaluación de {norma}</h1>
-          <h2>Software: {tipoSoftware}</h2>
-          <table className="evaluacion-tabla">
-            <thead>
-              <tr>
-                <th>Ítem</th>
-                <th>Criterio</th>
-                <th>Descripción</th>
-                <th>Valor</th>
-                <th>Observaciones</th>
+      <Navbar />
+      <div className="evaluacion-tabla-container">
+        <h1>Evaluación de {norma}</h1>
+        <h2>Software: {tipoSoftware}</h2>
+        <table className="evaluacion-tabla">
+          <thead>
+            <tr>
+              <th>Ítem</th>
+              <th>Criterio</th>
+              <th>Descripción</th>
+              <th>Valor</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {preguntasSeleccionadas.map((pregunta, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{pregunta.item}</td>
+                <td>{pregunta.descripcion}</td>
+                <td>
+                  <input className=" valor-evaluacion"
+                    type="number"
+                    min="1"
+                    max="5"
+                    value={valores[pregunta.descripcion] || ""}
+                    onChange={(e) =>
+                      handleValorChange(pregunta.descripcion, e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={observaciones[pregunta.descripcion] || ""}
+                    onChange={(e) =>
+                      handleObservacionesChange(pregunta.descripcion, e.target.value)
+                    }
+                  />
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {preguntasSeleccionadas.map((pregunta, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{pregunta.item}</td>
-                  <td>{pregunta.descripcion}</td>
-                  <td>
-                    <input
-                      type="number"
-                      min="1"
-                      max="5"
-                      value={valores[pregunta.descripcion] || ""}
-                      onChange={(e) =>
-                        handleValorChange(pregunta.descripcion, e.target.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={observaciones[pregunta.descripcion] || ""}
-                      onChange={(e) =>
-                        handleObservacionesChange(pregunta.descripcion, e.target.value)
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button onClick={handleVerResultados} className="guardar-btn-riesgos">
-            Ver Resultados Evaluación
-          </button>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={handleVerResultados} className="guardar-btn-riesgos">
+          Ver Resultados Evaluación
+        </button>
 
-          {resultados && (
-            <div className="resultados-container">
-              <h2>Resultados de la Evaluación</h2>
-              <table className="resultados-tabla">
-                <thead>
-                  <tr>
-                    <th>Criterio</th>
-                    <th>Porcentaje Total</th>
+        {resultados && (
+          <div className="resultados-container">
+            <h2>Resultados de la Evaluación</h2>
+            <table className="resultados-tabla">
+              <thead>
+                <tr>
+                  <th>Criterio</th>
+                  <th>Porcentaje Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resultados.map((resultado, index) => (
+                  <tr key={index}>
+                    <td>{resultado.criterio}</td>
+                    <td>{resultado.porcentaje}%</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {resultados.map((resultado, index) => (
-                    <tr key={index}>
-                      <td>{resultado.criterio}</td>
-                      <td>{resultado.porcentaje}%</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="botones-acciones">
-                <button onClick={handleMatrizRiesgos} className="matriz-btn">
-                  Realizar Matriz de Riesgos
-                </button>
-                <button onClick={handleVolverInicio} className="inicio-btn">
-                  Volver al Inicio
-                </button>
-              </div>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Leyenda de resultados */}
+            <div className="leyenda-resultados">
+              <p><strong>Leyenda:</strong></p>
+              <p>0 A 30%	DEFICIENTE</p>
+              <p>31 A 50%	INSUFICIENTE</p>
+              <p>51 A 70%	ACEPTABLE</p>
+              <p>71 A 89%	SOBRESALIENTE </p>
+              <p>MAS DE 90% EXCELENTE</p>
             </div>
-          )}
-        </div>
-        <Footer />
+
+            {/* Mostrar el porcentaje total */}
+            <div className="porcentaje-total">
+              <p><strong>Porcentaje Total de la Evaluación: {porcentajeTotal}%</strong></p>
+            </div>
+
+            <div className="botones-acciones">
+              <button onClick={handleMatrizRiesgos} className="matriz-btn">
+                Realizar Matriz de Riesgos
+              </button>
+              <button onClick={handleVolverInicio} className="inicio-btn">
+                Volver al Inicio
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+      <Footer />
+    </div>
   );
 };
 

@@ -222,12 +222,27 @@ def get_all_companies_db():
     """Obtener todas las empresas desde la base de datos."""
     connection = get_connection()
     cursor = connection.cursor()
-    query = "SELECT id_empresa, nombre, direccion, sector FROM Empresas"
+    query = "SELECT id_empresa, nombre, ciudad, email, telefono, nombre_software FROM empresas"
     cursor.execute(query)
-    companies = cursor.fetchall()
+    companies = cursor.fetchall()  # Esto devuelve una lista de tuplas
     cursor.close()
     connection.close()
-    return companies
+
+    # Convertir las tuplas a diccionarios
+    companies_list = []
+    for empresa in companies:
+        company_dict = {
+            "id_empresa": empresa[0],
+            "nombre": empresa[1],
+            "ciudad": empresa[2],
+            "email": empresa[3],
+            "telefono": empresa[4],
+            "nombre_software": empresa[5]
+        }
+        companies_list.append(company_dict)
+
+    return companies_list
+
 
 
 def create_company_db(data):

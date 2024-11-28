@@ -3,8 +3,6 @@ from fpdf import FPDF
 from model import (
     get_all_users_db,
     create_user_db,
-    update_user_db,
-    delete_user_db,
     get_user_by_email_db,
     get_criteria_by_norms_db,
     get_all_companies_db,
@@ -47,30 +45,6 @@ def create_user_service(data):
         return jsonify({"message": "Usuario creado satisfactoriamente", "user": new_user}), 201
     except Exception as e:
         return jsonify({"error": f"Error creando usuario: {str(e)}"}), 500
-
-
-def update_user_service(user_id, data):
-    """Servicio para actualizar un usuario."""
-    try:
-        updated_user = update_user_db(user_id, data)
-        if updated_user:
-            return jsonify({"message": "Usuario actualizado satisfactoriamente", "user": updated_user}), 200
-        else:
-            return jsonify({"error": "Usuario no encontrado"}), 404
-    except Exception as e:
-        return jsonify({"error": f"Error al actualizar el usuario: {str(e)}"}), 500
-
-
-def delete_user_service(user_id):
-    """Servicio para eliminar un usuario."""
-    try:
-        result = delete_user_db(user_id)
-        if result:
-            return jsonify({"message": "Usuario eliminado satisfactoriamente"}), 200
-        else:
-            return jsonify({"error": "Usuario no encontrado"}), 404
-    except Exception as e:
-        return jsonify({"error": f"Error al eliminar usuario: {str(e)}"}), 500
     
 def login_service(data):
     """Servicio para manejar el inicio de sesión."""
@@ -124,10 +98,11 @@ def get_criteria_by_norms_service(norms):
 def get_all_companies_service():
     """Servicio para obtener todas las empresas."""
     try:
-        companies = get_all_companies_db()
-        return jsonify(companies), 200
+        companies = get_all_companies_db()  # Obtener las empresas desde la base de datos
+        return jsonify({"empresas": companies}), 200  # Retorna las empresas como JSON
     except Exception as e:
-        return jsonify({"error": f"Error al obtener empresa: {str(e)}"}), 500
+        # Si ocurre un error, se maneja y se retorna un mensaje de error
+        return jsonify({"error": f"Error al obtener empresas: {str(e)}"}), 500
 
 
 def create_company_service(data):

@@ -1,9 +1,11 @@
 /* Paleta de colores */
 :root {
-    --negro: #000000;
-    --verde: #28a745;
-    --blanco: #ffffff;
-  }
+  --azul-claro: #a8c8f7; /* Azul claro suave */
+  --azul-oscuro: #4a6aff; /* Azul más oscuro */
+  --blanco: #ffffff;
+  --gris-claro: #f2f2f2; /* Gris claro para bordes y fondo suave */
+  --gris-oscuro: #333333; /* Gris oscuro para texto */
+}
   
   /* Estilos generales */
   body {
@@ -27,11 +29,12 @@
     max-width: 400px;
     width: 100%;
     text-align: center;
+    margin-top: 100px;
   }
   
   /* Título */
   h1 {
-    color: var(--verde);
+    color: var(--gris-oscuro);
     margin-bottom: 20px;
     font-size: 24px;
   }
@@ -58,14 +61,22 @@
   input {
     width: 100%;
     padding: 10px;
-    border: 1px solid var(--verde);
+    border: 1px solid var(--azul-oscuro);
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .input-registrar-usuario {
+    width: 92%;
+    padding: 10px;
+    border: 1px solid var(--azul-oscuro);
     border-radius: 5px;
     font-size: 14px;
   }
   
   /* Botón de registro */
   .btn {
-    background-color: var(--verde);
+    background-color: var(--azul-oscuro);
     color: var(--blanco);
     border: none;
     padding: 10px 15px;

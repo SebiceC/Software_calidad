@@ -23,9 +23,6 @@ const Navbar = () => {
           <li>
             <Link to="/matriz-riesgos">Matriz de Riesgos</Link>
           </li>
-          <li>
-            <Link to="/matriz-mitigacion">Matriz de Mitigación</Link>
-          </li>
         </ul>
       </nav>
     );

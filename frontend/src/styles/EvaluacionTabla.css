@@ -58,6 +58,14 @@ td input {
   border-radius: 5px;
   font-size: 14px; /* Espacio entre los campos */
 }
+
+.valor-evaluacion {
+  width: 65%;
+  padding: 10px;
+  border: 1px solid var(--azul-oscuro);
+  border-radius: 5px;
+  font-size: 14px;
+}
 .guardar-btn-riesgos {
   background-color: #007bff;
   color: #fff;
