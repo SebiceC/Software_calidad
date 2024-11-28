@@ -10,7 +10,11 @@ from service import (
     create_company_service,
     get_all_evaluations_service,
     create_evaluation_service,
-    generate_evaluation_pdf
+    generate_evaluation_pdf,
+    get_all_risk_matrices_service, 
+    create_risk_matrix_service,     
+    delete_risk_matrix_service,
+    create_mitigation_matrix_service     
 )
 
 controller = Blueprint('controller', __name__)
@@ -92,3 +96,41 @@ def download_evaluation_pdf(evaluation_id):
         return jsonify({"error": str(ve)}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+# ---- Rutas para Matrices de Riesgo ----
+
+@controller.route('/risk_matrices', methods=['GET'])
+def get_risk_matrices():
+    """Ruta para obtener todas las matrices de riesgo."""
+    try:
+        return get_all_risk_matrices_service()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@controller.route('/risk_matrices', methods=['POST'])
+def create_risk_matrix():
+    """Ruta para crear una nueva matriz de riesgo."""
+    data = request.json
+    try:
+        return create_risk_matrix_service(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@controller.route('/risk_matrices/<int:matrix_id>', methods=['DELETE'])
+def delete_risk_matrix(matrix_id):
+    """Ruta para eliminar una matriz de riesgo por ID."""
+    try:
+        return delete_risk_matrix_service(matrix_id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@controller.route('/mitigation_matrices', methods=['POST'])
+def create_mitigation_matrix():
+    """Crea una matriz de mitigación."""
+    try:
+        data = request.json
+        mitigation_id = create_mitigation_matrix_service(data)
+        return jsonify({"message": "Matriz de mitigación creada con éxito", "id_matriz_mitig": mitigation_id}), 201
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Error al crear la matriz de mitigación: {str(e)}"}), 500
